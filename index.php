@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>yourT</title>
+    <title>Fetcher</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -103,13 +103,13 @@
             echo '<div class="output-container">';
             echo '<img class="profile-pic" src="' . $profilePic . '" alt="Profile Picture">';
             echo '<div class="user-info">';
-            echo '<p>' . $username . '</p>';
-            echo '<p>' . $bio . '</p>';
+            echo '<p class="name">' . $username . '</p>';
+            echo '<p class="bio">' . $bio . '</p>';
             echo '</div>';
             echo '<div class="count">';
-            echo '<p>' . $followers . ' <strong>Followers</strong></p>';
-            echo '<p>' . $following . ' <strong>Following</strong></p>';
-            echo '<p>' . $tweets . ' <strong>Tweets</strong></p>';
+            echo '<p class="ercount">' . $followers . ' <strong>Followers</strong></p>';
+            echo '<p class="ingcount">' . $following . ' <strong>Following</strong></p>';
+            echo '<p class="tcount">' . $tweets . ' <strong>Tweets</strong></p>';
             echo '</div>';
             echo '</div>';
         }
