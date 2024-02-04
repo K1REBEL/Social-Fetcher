@@ -7,7 +7,6 @@ def scrape_user_data(username):
 
     url = f"https://instalker.org/{username}"
     response = requests.get(url)
-
     soup = BeautifulSoup(response.content, "html.parser")
 
     avatar_img = soup.find("img", {"src": lambda x: x and "twimg.com" in x})["src"]
@@ -17,6 +16,10 @@ def scrape_user_data(username):
     follower_count = soup.select("ul.right-details > li:nth-of-type(2) > div.all-dis-evnt > div.dscun-numbr")[0].text
     following_count = soup.select("ul.right-details > li:nth-of-type(3) > div.all-dis-evnt > div.dscun-numbr")[0].text
     tweet_count = soup.select("ul.right-details > li:nth-of-type(1) > div.all-dis-evnt > div.dscun-numbr")[0].text
+
+    if follower_count == '0' and following_count == '0' and tweet_count == '0':
+        print("This account doesn't exist")
+        return
 
     print("Avatar Image:", avatar_img)
     print("User Handle:", user_handle)

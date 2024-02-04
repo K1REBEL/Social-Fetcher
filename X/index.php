@@ -71,7 +71,7 @@
     <div class="container">
         
         <div class="input-container">
-            <form action="" method="GET">
+            <form action="#" method="GET">
                 <input type="text" id="argument" name="argument" placeholder="Enter Username" style="width: 90%">
                 <button type="submit">Submit</button>
             </form>
@@ -85,33 +85,40 @@
             $escapedArgument = escapeshellarg($argument);
             
             // Executing the Python script with the user input as an argument
-            $command = "python3 tfetcher.py " . $escapedArgument;
+            $command = "python tfetcher.py " . $escapedArgument;
             $output = shell_exec($command);
             
             // Processing the output
             $lines = explode("\n", $output);
+
+            if(count($lines) < 3) {
+                echo '<div class="not_found">';
+                echo '<h3>No such user on X, Try Again</h3>';
+                echo '</div>';
+                return;
+            } else {
+                $profilePic = trim(str_replace("Avatar Image:", "", $lines[0]));
+                $userhandle = trim(str_replace("User Handle:", "", $lines[1]));
+                $username = trim(str_replace("Username:", "", $lines[2]));
+                $bio = trim(str_replace("User Bio:", "", $lines[3]));
+                $followers = trim(str_replace("Follower Count:", "", $lines[4]));
+                $following = trim(str_replace("Following Count:", "", $lines[5]));
+                $tweets = trim(str_replace("Tweets Count:", "", $lines[6]));
             
-            $profilePic = trim(str_replace("Avatar Image:", "", $lines[0]));
-            $userhandle = trim(str_replace("User Handle:", "", $lines[1]));
-            $username = trim(str_replace("Username:", "", $lines[2]));
-            $bio = trim(str_replace("User Bio:", "", $lines[3]));
-            $followers = trim(str_replace("Follower Count:", "", $lines[4]));
-            $following = trim(str_replace("Following Count:", "", $lines[5]));
-            $tweets = trim(str_replace("Tweets Count:", "", $lines[6]));
-            
-            // Outputting the results
-            echo '<div class="output-container">';
-            echo '<img class="profile-pic" src="' . $profilePic . '" alt="Profile Picture">';
-            echo '<div class="user-info">';
-            echo '<p class="name">' . $username . '</p>';
-            echo '<p class="bio">' . $bio . '</p>';
-            echo '</div>';
-            echo '<div class="count">';
-            echo '<p class="ercount">' . $followers . ' <strong>Followers</strong></p>';
-            echo '<p class="ingcount">' . $following . ' <strong>Following</strong></p>';
-            echo '<p class="tcount">' . $tweets . ' <strong>Tweets</strong></p>';
-            echo '</div>';
-            echo '</div>';
+                // Outputting the results
+                echo '<div class="output-container">';
+                echo '<img class="profile-pic" src="' . $profilePic . '" alt="Profile Picture">';
+                echo '<div class="user-info">';
+                echo '<p class="name">' . $username . '</p>';
+                echo '<p class="bio">' . $bio . '</p>';
+                echo '</div>';
+                echo '<div class="count">';
+                echo '<p class="ercount">' . $followers . ' <strong>Followers</strong></p>';
+                echo '<p class="ingcount">' . $following . ' <strong>Following</strong></p>';
+                echo '<p class="tcount">' . $tweets . ' <strong>Tweets</strong></p>';
+                echo '</div>';
+                echo '</div>';
+            }
         }
         ?>
     </div>
